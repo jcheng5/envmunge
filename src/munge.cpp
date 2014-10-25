@@ -25,3 +25,17 @@ void replace(int index, std::string name, std::string value) {
   strcpy(line, (name + "=" + value).c_str());
   environ[index] = line;
 }
+
+// [[Rcpp::export]]
+void unset(std::vector<bool> indices) {
+  char **e = environ;
+  for (size_t i = 0; i < indices.size(); i++) {
+    if (indices[i]) {
+      // it's a dupe
+    } else {
+      *e = environ[i];
+      e++;
+    }
+  }
+  *e = NULL;
+}

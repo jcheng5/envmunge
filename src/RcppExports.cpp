@@ -33,3 +33,15 @@ BEGIN_RCPP
     return R_NilValue;
 END_RCPP
 }
+// unset
+void unset(std::vector<bool> indices);
+RcppExport SEXP envmunge_unset(SEXP indicesSEXP) {
+BEGIN_RCPP
+    {
+        Rcpp::RNGScope __rngScope;
+        Rcpp::traits::input_parameter< std::vector<bool> >::type indices(indicesSEXP );
+        unset(indices);
+    }
+    return R_NilValue;
+END_RCPP
+}

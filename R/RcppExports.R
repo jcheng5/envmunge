@@ -9,3 +9,7 @@ replace <- function(index, name, value) {
     invisible(.Call('envmunge_replace', PACKAGE = 'envmunge', index, name, value))
 }
 
+unset <- function(indices) {
+    invisible(.Call('envmunge_unset', PACKAGE = 'envmunge', indices))
+}
+
