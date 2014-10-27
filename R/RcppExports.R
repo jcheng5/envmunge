@@ -13,3 +13,7 @@ unset <- function(indices) {
     invisible(.Call('envmunge_unset', PACKAGE = 'envmunge', indices))
 }
 
+fix_yosemite_bug <- function() {
+    invisible(.Call('envmunge_fix_yosemite_bug', PACKAGE = 'envmunge'))
+}
+

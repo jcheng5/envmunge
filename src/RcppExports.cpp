@@ -45,3 +45,14 @@ BEGIN_RCPP
     return R_NilValue;
 END_RCPP
 }
+// fix_yosemite_bug
+void fix_yosemite_bug();
+RcppExport SEXP envmunge_fix_yosemite_bug() {
+BEGIN_RCPP
+    {
+        Rcpp::RNGScope __rngScope;
+        fix_yosemite_bug();
+    }
+    return R_NilValue;
+END_RCPP
+}

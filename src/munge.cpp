@@ -43,3 +43,29 @@ void unset(std::vector<bool> indices) {
   }
   *e = NULL;
 }
+
+std::string varname(const char* line) {
+  size_t nameLen = strcspn(line, "=");
+  if (nameLen == strlen(line)) {
+    return std::string();
+  } else {
+    return std::string(line, nameLen);
+  }
+}
+
+// [[Rcpp::export]]
+void fix_yosemite_bug() {
+  std::set<std::string> seen;
+  char **read = environ, **write = environ;
+  
+  for (; *read; read++) {
+    std::string name = varname(*read);
+    if (seen.find(name) == seen.end()) {
+      // Not a dupe
+      *write = *read;
+      write++;
+    }
+    seen.insert(name);
+  }
+  *write = NULL;
+}
