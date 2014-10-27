@@ -17,3 +17,11 @@ fix_yosemite_bug <- function() {
     invisible(.Call('envmunge_fix_yosemite_bug', PACKAGE = 'envmunge'))
 }
 
+do_unset <- function(name) {
+    invisible(.Call('envmunge_do_unset', PACKAGE = 'envmunge', name))
+}
+
+append_env <- function(name, value) {
+    invisible(.Call('envmunge_append_env', PACKAGE = 'envmunge', name, value))
+}
+

@@ -56,3 +56,28 @@ BEGIN_RCPP
     return R_NilValue;
 END_RCPP
 }
+// do_unset
+void do_unset(const std::string& name);
+RcppExport SEXP envmunge_do_unset(SEXP nameSEXP) {
+BEGIN_RCPP
+    {
+        Rcpp::RNGScope __rngScope;
+        Rcpp::traits::input_parameter< const std::string& >::type name(nameSEXP );
+        do_unset(name);
+    }
+    return R_NilValue;
+END_RCPP
+}
+// append_env
+void append_env(const std::string& name, const std::string& value);
+RcppExport SEXP envmunge_append_env(SEXP nameSEXP, SEXP valueSEXP) {
+BEGIN_RCPP
+    {
+        Rcpp::RNGScope __rngScope;
+        Rcpp::traits::input_parameter< const std::string& >::type name(nameSEXP );
+        Rcpp::traits::input_parameter< const std::string& >::type value(valueSEXP );
+        append_env(name, value);
+    }
+    return R_NilValue;
+END_RCPP
+}
