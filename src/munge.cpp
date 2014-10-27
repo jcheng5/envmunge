@@ -5,8 +5,12 @@
 #include <string>
 using namespace Rcpp;
 
+#ifdef __APPLE__
+#include <crt_externs.h>
+#define environ *_NSGetEnviron()
+#else
 extern char **environ;
-
+#endif
 // [[Rcpp::export]]
 std::vector<std::string> ls_env() {
   char **e = environ;
