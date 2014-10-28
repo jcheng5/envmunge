@@ -56,18 +56,34 @@ std::string varname(const char* line) {
 // [[Rcpp::export]]
 void fix_yosemite_bug() {
   std::set<std::string> seen;
-  char **read = environ, **write = environ;
+  std::set<std::string> dupes;
   
-  for (; *read; read++) {
+  // Create a list of the environment variables that appear more than once
+  for (char **read = *_NSGetEnviron(); *read; read++) {
     std::string name = varname(*read);
-    if (seen.find(name) == seen.end()) {
-      // Not a dupe
-      *write = *read;
-      write++;
+    if (name.size() == 0) {
+      continue;
     }
-    seen.insert(name);
+    if (seen.find(name) != seen.end()) {
+      dupes.insert(name);
+    } else {
+      seen.insert(name);
+    }
   }
-  *write = NULL;
+  
+  // Loop over the list of duplicated variables
+  for (std::set<std::string>::iterator dupe = dupes.begin(); dupe != dupes.end(); dupe++) {
+    const char *name = (*dupe).c_str();
+    char *val = getenv(name);
+    if (val != NULL) {
+      // unsetenv removes *all* instances of the variable from the environment
+      unsetenv(name);
+
+      // replace with the value from getenv (in practice appears to be the
+      // first value in the list)
+      setenv(name, val, 0);
+    }
+  }
 }
 
 // [[Rcpp::export]]
